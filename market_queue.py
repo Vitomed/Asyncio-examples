@@ -15,7 +15,7 @@ async def worker(name: str, queue: Queue):
         print(f'{name} has work for {sleep_for:.2f} seconds')
 
 
-async def main(queue: List[int], n: int):
+async def get_total_time(queue: List[int], n: int):
     work_queue = asyncio.Queue()
 
     for work in queue:
@@ -34,11 +34,11 @@ async def main(queue: List[int], n: int):
     for task in tasks:
         task.cancel()
 
+    print(f'{n} workers has works in parallel for {total_work_for:.0f} seconds')
     print('====')
-    print(f'{n} workers has works in parallel for {total_work_for:.2f} seconds')
 
 
 if __name__ == "__main__":
-    asyncio.run(main(queue=[5, 3, 4], n=1))  # 12
-    asyncio.run(main(queue=[10, 2, 3, 3], n=2))  # 2
-    asyncio.run(main(queue=[2, 3, 10], n=2))  # 12
+    asyncio.run(get_total_time(queue=[5, 3, 4], n=1))  # 12
+    asyncio.run(get_total_time(queue=[10, 2, 3, 3], n=2))  # 2
+    asyncio.run(get_total_time(queue=[2, 3, 10], n=2))  # 12
